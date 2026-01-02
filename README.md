@@ -20,11 +20,11 @@
     }
 
     .foto {
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     .foto img {
-      max-width: 150px;
+      max-width: 300px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
@@ -92,4 +92,60 @@
   <h2>🎁 Lista de regalos</h2>
   <p>Haz clic en un regalo para reservarlo (no se repetirá)</p>
 
-  <di
+  <div class="contenedor">
+    <div class="regalo" id="regalo1" onclick="seleccionarRegalo('regalo1')">🎧 Audífonos</div>
+    <div class="regalo" id="regalo2" onclick="seleccionarRegalo('regalo2')">☕ Cafetera</div>
+    <div class="regalo" id="regalo3" onclick="seleccionarRegalo('regalo3')">🍳 Juego de sartenes</div>
+    <div class="regalo" id="regalo4" onclick="seleccionarRegalo('regalo4')">🍷 Copas de vino</div>
+    <div class="regalo" id="regalo5" onclick="seleccionarRegalo('regalo5')">🎮 Control de videojuegos</div>
+  </div>
+
+  <footer>
+    Hecho con ❤️ para una gran celebración
+  </footer>
+
+  <script>
+    function obtenerRegalos() {
+      return JSON.parse(localStorage.getItem("regalos")) || {};
+    }
+
+    function guardarRegalos(regalos) {
+      localStorage.setItem("regalos", JSON.stringify(regalos));
+    }
+
+    function seleccionarRegalo(id) {
+      const regalos = obtenerRegalos();
+
+      if (regalos[id]) {
+        alert("Este regalo ya fue reservado 🎁");
+        return;
+      }
+
+      const nombre = prompt("¿Quién va a regalar esto?");
+      if (!nombre) return;
+
+      regalos[id] = nombre;
+      guardarRegalos(regalos);
+      actualizarVista();
+    }
+
+    function actualizarVista() {
+      const regalos = obtenerRegalos();
+
+      document.querySelectorAll(".regalo").forEach(div => {
+        const id = div.id;
+        const texto = div.innerText.split("\n")[0];
+
+        if (regalos[id]) {
+          div.classList.add("ocupado");
+          div.innerHTML = `${texto}<div class="nombre">Reservado por: ${regalos[id]}</div>`;
+          div.onclick = null;
+        }
+      });
+    }
+
+    actualizarVista();
+  </script>
+
+</body>
+</html>

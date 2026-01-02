@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -57,8 +56,7 @@
 
 <body>
 
-  <h1>Proyecto Matrimonio</h1>
-  <h2>Fase de financiamiento 💸❤️</h2>
+  <h1>Proyecto Matrimonio:fase de financiamiento 💸❤️</h1>
 
   <p>
     Elige un regalo y escribe tu nombre para que no se repita.

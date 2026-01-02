@@ -16,6 +16,10 @@
       text-align: center;
     }
 
+    p {
+      text-align: center;
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -36,9 +40,9 @@
     }
 
     input {
-      padding: 5px;
+      padding: 6px;
       margin-top: 5px;
-      width: 60%;
+      width: 65%;
     }
 
     button {
@@ -47,8 +51,9 @@
       cursor: pointer;
     }
 
-    .bloqueado button,
-    .bloqueado input {
+    /* 🔑 SOLO se oculta el input y el botón Elegir */
+    .bloqueado input,
+    .bloqueado .btn-elegir {
       display: none;
     }
   </style>
@@ -59,9 +64,9 @@
   <h1>Proyecto Matrimonio</h1>
   <h2>Fase de financiamiento 💸❤️</h2>
 
-  <p style="text-align:center">
+  <p>
     Elige un regalo y escribe tu nombre para que no se repita.<br>
-    Si te equivocaste, puedes borrar tu selección.
+    Si te equivocaste, puedes corregirlo.
   </p>
 
   <ul>
@@ -71,11 +76,15 @@
       <strong>Juego de vasos</strong><br>
       <span id="vasos-nombre"></span><br>
 
-      <input type="text" id="vasos-input" placeholder="Tu nombre">
-      <br>
+      <input type="text" id="vasos-input" placeholder="Tu nombre"><br>
 
-      <button onclick="elegirRegalo('vasos')">Elegir</button>
-      <button onclick="borrarRegalo('vasos')">Me equivoqué</button>
+      <button class="btn-elegir" onclick="elegirRegalo('vasos')">
+        Elegir
+      </button>
+
+      <button onclick="borrarRegalo('vasos')">
+        Me equivoqué
+      </button>
     </li>
 
     <!-- REGALO 2 -->
@@ -83,11 +92,15 @@
       <strong>Licuadora</strong><br>
       <span id="licuadora-nombre"></span><br>
 
-      <input type="text" id="licuadora-input" placeholder="Tu nombre">
-      <br>
+      <input type="text" id="licuadora-input" placeholder="Tu nombre"><br>
 
-      <button onclick="elegirRegalo('licuadora')">Elegir</button>
-      <button onclick="borrarRegalo('licuadora')">Me equivoqué</button>
+      <button class="btn-elegir" onclick="elegirRegalo('licuadora')">
+        Elegir
+      </button>
+
+      <button onclick="borrarRegalo('licuadora')">
+        Me equivoqué
+      </button>
     </li>
 
     <!-- REGALO 3 -->
@@ -95,77 +108,21 @@
       <strong>Juego de sartenes</strong><br>
       <span id="sartenes-nombre"></span><br>
 
-      <input type="text" id="sartenes-input" placeholder="Tu nombre">
-      <br>
+      <input type="text" id="sartenes-input" placeholder="Tu nombre"><br>
 
-      <button onclick="elegirRegalo('sartenes')">Elegir</button>
-      <button onclick="borrarRegalo('sartenes')">Me equivoqué</button>
+      <button class="btn-elegir" onclick="elegirRegalo('sartenes')">
+        Elegir
+      </button>
+
+      <button onclick="borrarRegalo('sartenes')">
+        Me equivoqué
+      </button>
     </li>
 
   </ul>
 
-  <!-- FIREBASE -->
+  <!-- 🔥 FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, remove } 
-      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBBJwB7goplMb2WJpBvJU5rsvoueD84glg",
-      authDomain: "despedida-ba71a.firebaseapp.com",
-      databaseURL: "https://despedida-ba71a-default-rtdb.firebaseio.com",
-      projectId: "despedida-ba71a",
-      storageBucket: "despedida-ba71a.firebasestorage.app",
-      messagingSenderId: "30414791076",
-      appId: "1:30414791076:web:08d0d7494477ca5f912131",
-      measurementId: "G-GY9J0H7BW8"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Elegir regalo
-    window.elegirRegalo = function(id) {
-      const input = document.getElementById(id + "-input");
-      const nombre = input.value.trim();
-
-      if (nombre === "") {
-        alert("Por favor escribe tu nombre");
-        return;
-      }
-
-      set(ref(db, "regalos/" + id), {
-        nombre: nombre
-      });
-    };
-
-    // Borrar regalo
-    window.borrarRegalo = function(id) {
-      remove(ref(db, "regalos/" + id));
-    };
-
-    // Escuchar cambios en tiempo real
-    onValue(ref(db, "regalos"), (snapshot) => {
-      const data = snapshot.val() || {};
-
-      document.querySelectorAll("li").forEach(li => {
-        li.classList.remove("bloqueado");
-        const span = li.querySelector("span");
-        if (span) span.innerText = "";
-      });
-
-      for (let id in data) {
-        const li = document.getElementById(id);
-        const span = document.getElementById(id + "-nombre");
-
-        if (li && span) {
-          span.innerText = "Elegido por: " + data[id].nombre;
-          span.className = "elegido";
-          li.classList.add("bloqueado");
-        }
-      }
-    });
-  </script>
-
-</body>
-</html>
+    import { getDatabase, ref, set, onValue, remove }
+      from "https://www.gstatic.com/fireb

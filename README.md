@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -11,11 +12,7 @@
       padding: 20px;
     }
 
-    h1, h2 {
-      text-align: center;
-    }
-
-    p {
+    h1, h2, p {
       text-align: center;
     }
 
@@ -50,9 +47,9 @@
       cursor: pointer;
     }
 
-    /* 🔑 SOLO se oculta el input y el botón Elegir */
+    /* Cuando está elegido */
     .bloqueado input,
-    .bloqueado .btn-elegir {
+    .bloqueado button {
       display: none;
     }
   </style>
@@ -64,8 +61,7 @@
   <h2>Fase de financiamiento 💸❤️</h2>
 
   <p>
-    Elige un regalo y escribe tu nombre para que no se repita.<br>
-    Si te equivocaste, puedes corregirlo.
+    Elige un regalo y escribe tu nombre para que no se repita.
   </p>
 
   <ul>
@@ -76,14 +72,7 @@
       <span id="vasos-nombre"></span><br>
 
       <input type="text" id="vasos-input" placeholder="Tu nombre"><br>
-
-      <button class="btn-elegir" onclick="elegirRegalo('vasos')">
-        Elegir
-      </button>
-
-      <button onclick="borrarRegalo('vasos')">
-        Me equivoqué
-      </button>
+      <button onclick="elegirRegalo('vasos')">Elegir</button>
     </li>
 
     <!-- REGALO 2 -->
@@ -92,14 +81,7 @@
       <span id="licuadora-nombre"></span><br>
 
       <input type="text" id="licuadora-input" placeholder="Tu nombre"><br>
-
-      <button class="btn-elegir" onclick="elegirRegalo('licuadora')">
-        Elegir
-      </button>
-
-      <button onclick="borrarRegalo('licuadora')">
-        Me equivoqué
-      </button>
+      <button onclick="elegirRegalo('licuadora')">Elegir</button>
     </li>
 
     <!-- REGALO 3 -->
@@ -108,36 +90,9 @@
       <span id="sartenes-nombre"></span><br>
 
       <input type="text" id="sartenes-input" placeholder="Tu nombre"><br>
-
-      <button class="btn-elegir" onclick="elegirRegalo('sartenes')">
-        Elegir
-      </button>
-
-      <button onclick="borrarRegalo('sartenes')">
-        Me equivoqué
-      </button>
-    </li>
-
-        <!-- REGALO 4 -->
-    <li id="refractaria">
-      <strong>Refractaria</strong><br>
-      <span id="srefractaria-nombre"></span><br>
-
-      <input type="text" id="sartenes-input" placeholder="Tu nombre"><br>
-
-      <button class="btn-elegir" onclick="elegirRegalo('sartenes')">
-        Elegir
-      </button>
-
-      <button onclick="borrarRegalo('sartenes')">
-        Me equivoqué
-      </button>
+      <button onclick="elegirRegalo('sartenes')">Elegir</button>
     </li>
 
   </ul>
 
-  <!-- 🔥 FIREBASE -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, remove }
-      from "https://www.gstatic.com/fireb
+  <!-- 🔥 FIREBASE

@@ -86,7 +86,7 @@
   </header>
 
   <div class="foto">
-    <img src="foto-amigos.png" alt="Los futuros esposos">
+    <img src="foto-amigos.jpg" alt="Los futuros esposos">
   </div>
 
   <h2>🎁 Lista de regalos</h2>

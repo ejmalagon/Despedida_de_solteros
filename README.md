@@ -1,150 +1,170 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto Matrimonio: fase de financiamiento 🎉</title>
+  <title>Proyecto Matrimonio: fase de financiamiento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #222;
-      color: white;
+      background: #f4f4f4;
       padding: 20px;
     }
 
-    .foto {
-      margin-top: 20px;
+    h1, h2 {
+      text-align: center;
     }
 
-    .foto img {
-      max-width: 300px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: auto;
     }
 
-    h2 {
-      margin-top: 30px;
-    }
-
-    .contenedor {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 20px;
-    }
-
-    .regalo {
-      background-color: white;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      width: 220px;
+    li {
+      background: white;
+      margin-bottom: 15px;
       padding: 15px;
-      margin: 10px;
+      border-radius: 8px;
+    }
+
+    .elegido {
+      color: green;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 5px;
+      margin-top: 5px;
+      width: 60%;
+    }
+
+    button {
+      padding: 6px 10px;
+      margin-top: 5px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    .regalo:hover {
-      background-color: #e8f0ff;
-    }
-
-    .ocupado {
-      background-color: #ddd;
-      border-color: #999;
-      cursor: not-allowed;
-    }
-
-    .ocupado:hover {
-      background-color: #ddd;
-    }
-
-    .nombre {
-      margin-top: 10px;
-      font-size: 0.9em;
-      color: #444;
-    }
-
-    footer {
-      margin: 30px;
-      font-size: 0.9em;
-      color: #666;
+    .bloqueado button,
+    .bloqueado input {
+      display: none;
     }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <h1>🎉 Despedida de Soltero 🎉</h1>
-    <p>¡Celebremos a los futuros esposos!</p>
-  </header>
+  <h1>Proyecto Matrimonio</h1>
+  <h2>Fase de financiamiento 💸❤️</h2>
 
-  <div class="foto">
-    <img src="foto-amigos.jpg" alt="Los futuros esposos">
-  </div>
+  <p style="text-align:center">
+    Elige un regalo y escribe tu nombre para que no se repita.<br>
+    Si te equivocaste, puedes borrar tu selección.
+  </p>
 
-  <h2>🎁 Lista de regalos</h2>
-  <p>Haz clic en un regalo para reservarlo (no se repetirá)</p>
+  <ul>
 
-  <div class="contenedor">
-    <div class="regalo" id="regalo1" onclick="seleccionarRegalo('regalo1')">🎧 Audífonos</div>
-    <div class="regalo" id="regalo2" onclick="seleccionarRegalo('regalo2')">☕ Cafetera</div>
-    <div class="regalo" id="regalo3" onclick="seleccionarRegalo('regalo3')">🍳 Juego de sartenes</div>
-    <div class="regalo" id="regalo4" onclick="seleccionarRegalo('regalo4')">🍷 Copas de vino</div>
-    <div class="regalo" id="regalo5" onclick="seleccionarRegalo('regalo5')">🎮 Control de videojuegos</div>
-  </div>
+    <!-- REGALO 1 -->
+    <li id="vasos">
+      <strong>Juego de vasos</strong><br>
+      <span id="vasos-nombre"></span><br>
 
-  <footer>
-    Hecho con ❤️ para una gran celebración
-  </footer>
+      <input type="text" id="vasos-input" placeholder="Tu nombre">
+      <br>
 
-  <script>
-    function obtenerRegalos() {
-      return JSON.parse(localStorage.getItem("regalos")) || {};
-    }
+      <button onclick="elegirRegalo('vasos')">Elegir</button>
+      <button onclick="borrarRegalo('vasos')">Me equivoqué</button>
+    </li>
 
-    function guardarRegalos(regalos) {
-      localStorage.setItem("regalos", JSON.stringify(regalos));
-    }
+    <!-- REGALO 2 -->
+    <li id="licuadora">
+      <strong>Licuadora</strong><br>
+      <span id="licuadora-nombre"></span><br>
 
-    function seleccionarRegalo(id) {
-      const regalos = obtenerRegalos();
+      <input type="text" id="licuadora-input" placeholder="Tu nombre">
+      <br>
 
-      if (regalos[id]) {
-        alert("Este regalo ya fue reservado 🎁");
+      <button onclick="elegirRegalo('licuadora')">Elegir</button>
+      <button onclick="borrarRegalo('licuadora')">Me equivoqué</button>
+    </li>
+
+    <!-- REGALO 3 -->
+    <li id="sartenes">
+      <strong>Juego de sartenes</strong><br>
+      <span id="sartenes-nombre"></span><br>
+
+      <input type="text" id="sartenes-input" placeholder="Tu nombre">
+      <br>
+
+      <button onclick="elegirRegalo('sartenes')">Elegir</button>
+      <button onclick="borrarRegalo('sartenes')">Me equivoqué</button>
+    </li>
+
+  </ul>
+
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue, remove } 
+      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBJwB7goplMb2WJpBvJU5rsvoueD84glg",
+      authDomain: "despedida-ba71a.firebaseapp.com",
+      databaseURL: "https://despedida-ba71a-default-rtdb.firebaseio.com",
+      projectId: "despedida-ba71a",
+      storageBucket: "despedida-ba71a.firebasestorage.app",
+      messagingSenderId: "30414791076",
+      appId: "1:30414791076:web:08d0d7494477ca5f912131",
+      measurementId: "G-GY9J0H7BW8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Elegir regalo
+    window.elegirRegalo = function(id) {
+      const input = document.getElementById(id + "-input");
+      const nombre = input.value.trim();
+
+      if (nombre === "") {
+        alert("Por favor escribe tu nombre");
         return;
       }
 
-      const nombre = prompt("¿Quién va a regalar esto?");
-      if (!nombre) return;
-
-      regalos[id] = nombre;
-      guardarRegalos(regalos);
-      actualizarVista();
-    }
-
-    function actualizarVista() {
-      const regalos = obtenerRegalos();
-
-      document.querySelectorAll(".regalo").forEach(div => {
-        const id = div.id;
-        const texto = div.innerText.split("\n")[0];
-
-        if (regalos[id]) {
-          div.classList.add("ocupado");
-          div.innerHTML = `${texto}<div class="nombre">Reservado por: ${regalos[id]}</div>`;
-          div.onclick = null;
-        }
+      set(ref(db, "regalos/" + id), {
+        nombre: nombre
       });
-    }
+    };
 
-    actualizarVista();
+    // Borrar regalo
+    window.borrarRegalo = function(id) {
+      remove(ref(db, "regalos/" + id));
+    };
+
+    // Escuchar cambios en tiempo real
+    onValue(ref(db, "regalos"), (snapshot) => {
+      const data = snapshot.val() || {};
+
+      document.querySelectorAll("li").forEach(li => {
+        li.classList.remove("bloqueado");
+        const span = li.querySelector("span");
+        if (span) span.innerText = "";
+      });
+
+      for (let id in data) {
+        const li = document.getElementById(id);
+        const span = document.getElementById(id + "-nombre");
+
+        if (li && span) {
+          span.innerText = "Elegido por: " + data[id].nombre;
+          span.className = "elegido";
+          li.classList.add("bloqueado");
+        }
+      }
+    });
   </script>
 
 </body>

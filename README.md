@@ -118,6 +118,22 @@
       </button>
     </li>
 
+        <!-- REGALO 4 -->
+    <li id="refractaria">
+      <strong>Refractaria</strong><br>
+      <span id="srefractaria-nombre"></span><br>
+
+      <input type="text" id="sartenes-input" placeholder="Tu nombre"><br>
+
+      <button class="btn-elegir" onclick="elegirRegalo('sartenes')">
+        Elegir
+      </button>
+
+      <button onclick="borrarRegalo('sartenes')">
+        Me equivoqué
+      </button>
+    </li>
+
   </ul>
 
   <!-- 🔥 FIREBASE -->

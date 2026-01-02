@@ -95,4 +95,65 @@
 
   </ul>
 
-  <!-- 🔥 FIREBASE
+  <!-- 🔥 FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue }
+      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBJwB7goplMb2WJpBvJU5rsvoueD84glg",
+      authDomain: "despedida-ba71a.firebaseapp.com",
+      databaseURL: "https://despedida-ba71a-default-rtdb.firebaseio.com",
+      projectId: "despedida-ba71a",
+      storageBucket: "despedida-ba71a.firebasestorage.app",
+      messagingSenderId: "30414791076",
+      appId: "1:30414791076:web:08d0d7494477ca5f912131",
+      measurementId: "G-GY9J0H7BW8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Elegir regalo
+    window.elegirRegalo = function(id) {
+      const input = document.getElementById(id + "-input");
+      const nombre = input.value.trim();
+
+      if (nombre === "") {
+        alert("Por favor escribe tu nombre");
+        return;
+      }
+
+      set(ref(db, "regalos/" + id), {
+        nombre: nombre
+      });
+    };
+
+    // Escuchar cambios en tiempo real
+    onValue(ref(db, "regalos"), (snapshot) => {
+      const data = snapshot.val() || {};
+
+      // Reset visual
+      document.querySelectorAll("li").forEach(li => {
+        li.classList.remove("bloqueado");
+        const span = li.querySelector("span");
+        if (span) span.innerText = "";
+      });
+
+      // Aplicar datos
+      for (let id in data) {
+        const li = document.getElementById(id);
+        const span = document.getElementById(id + "-nombre");
+
+        if (li && span) {
+          span.innerText = "Elegido por: " + data[id].nombre;
+          span.className = "elegido";
+          li.classList.add("bloqueado");
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
